@@ -28,7 +28,7 @@ def send_sms(text, recipient_list, sender=None,
     Any unrecognised kwargs will be passed to txtlocal in the POST data.
     """
     post_data = {
-        'selectednums': '.'.join(recipient_list),
+        'selectednums': ','.join(recipient_list),
         'message': urlencode(text),
         'uname': username or settings.TXTLOCAL_USERNAME,
         'pword': password or password.TXTLOCAL_PASSWORD,
