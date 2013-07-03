@@ -4,10 +4,8 @@ from django.utils import timezone
 
 
 class InboxSMS(models.Model):
-    """
-        This models saves POST parameters that txtlocal sends together with inbox SMS.
-    """
-    sender = models.CharField(_('The mobile number of the handset.'), max_length=20)
+    """A message recieved from txtlocal."""
+    sender = models.CharField(_('The mobile number of the sender.'), max_length=20)
     content = models.CharField(_('The message content.'), max_length=255, default='', blank=True)
     in_number = models.CharField(_('The number the message was sent to (your inbound number).'), max_length=20, default='', blank=True)
     email = models.EmailField(_('Any email address extracted.'), max_length=255, default='', blank=True)
