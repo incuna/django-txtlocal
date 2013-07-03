@@ -20,7 +20,7 @@ def send_sms(text, recipient_list, sender=None,
                         eg. UK numbers would look like 447123456789.
         text: The message text. (Gets URI encoded.)
         sender: Must be word up to 11 characters or a number up to 14 digits.
-                Defaults to settings.DEFAULT_FROM_SMS. (Must be a string.)
+                Defaults to settings.TXTLOCAL_FROM. (Must be a string.)
         username: Defaults to settings.TXTLOCAL_USERNAME.
         password: Defaults to settings.TXTLOCAL_PASSWORD.
         **kwargs: Will be passed through to textlocal in the POST data.
@@ -32,11 +32,11 @@ def send_sms(text, recipient_list, sender=None,
         'message': urlencode(text),
         'uname': username or settings.TXTLOCAL_USERNAME,
         'pword': password or password.TXTLOCAL_PASSWORD,
-        'from': sender or settings.DEFAULT_FROM_SMS,
+        'from': sender or settings.TXTLOCAL_FROM,
         'json': 1,  # This makes textlocal send us back info about the request.
     }
 
-    url = "http://www.txtlocal.com/sendsmspost.php"
+    url = settings.get('TXTLOCAL_ENDPOINT', 'https://www.txtlocal.com/sendsmspost.php')
     response = requests.post(url, data=post_data).json()
     available = response.get('CreditsAvailable')
     required = response.get('CreditsRequired')
