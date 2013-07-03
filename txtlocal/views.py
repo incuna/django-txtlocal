@@ -10,6 +10,4 @@ def sms_response(request):
         form.save()
         return HttpResponse('OK')
     else:
-        print "There were some errors parsing data from Txtlocal:"
-        print form.errors
         return HttpResponse('Error')
