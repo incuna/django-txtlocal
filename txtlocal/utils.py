@@ -27,7 +27,7 @@ def send_sms(text, recipient_list, sender=None,
 
     Any unrecognised kwargs will be passed to txtlocal in the POST data.
     """
-    post_data = {
+    payload = {
         'selectednums': ','.join(recipient_list),
         'message': urlencode(text),
         'uname': username or settings.TXTLOCAL_USERNAME,
@@ -37,7 +37,7 @@ def send_sms(text, recipient_list, sender=None,
     }
 
     url = getattr(settings, 'TXTLOCAL_ENDPOINT', 'https://www.txtlocal.com/sendsmspost.php')
-    response = requests.post(url, data=post_data).json()
+    response = requests.post(url, data=payload).json()
     available = response.get('CreditsAvailable')
     required = response.get('CreditsRequired')
     remaining = response.get('CreditsRemaining')
