@@ -1,8 +1,8 @@
-Changelog for django-incuna
-===========================
+Changelog for django-txtlocal
+=============================
 
-v0.2
-------
+v1.0
+----
 * Rewrite SMS sending code.
 * Rename ``incuna-txtlocal`` to ``django-txtlocal``.
 * PEP8.
@@ -11,5 +11,5 @@ v0.2
 * Migrate to git.
 
 v0.1
-------
+----
 * Initial release.
