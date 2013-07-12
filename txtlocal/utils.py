@@ -36,7 +36,7 @@ def send_sms(text, recipient_list, sender=None,
         'json': 1,  # This makes textlocal send us back info about the request.
     }
 
-    url = settings.get('TXTLOCAL_ENDPOINT', 'https://www.txtlocal.com/sendsmspost.php')
+    url = getattr(settings, 'TXTLOCAL_ENDPOINT', 'https://www.txtlocal.com/sendsmspost.php')
     response = requests.post(url, data=post_data).json()
     available = response.get('CreditsAvailable')
     required = response.get('CreditsRequired')
