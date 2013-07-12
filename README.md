@@ -8,7 +8,7 @@ For sending and receiving text messages (SMS) from textlocal.com
     pip install django-txtlocal
 
 
-### If you're recieving messages
+### If you're receiving messages
 
 Add to your `urls.py`:
 
