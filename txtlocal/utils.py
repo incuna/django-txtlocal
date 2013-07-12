@@ -3,7 +3,6 @@ import requests
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
-from django.utils.http import urlencode
 
 
 def send_sms(text, recipient_list, sender=None,
@@ -29,7 +28,7 @@ def send_sms(text, recipient_list, sender=None,
     """
     payload = {
         'selectednums': ','.join(recipient_list),
-        'message': urlencode(text),
+        'message': text,
         'uname': username or settings.TXTLOCAL_USERNAME,
         'pword': password or password.TXTLOCAL_PASSWORD,
         'from': sender or settings.TXTLOCAL_FROM,
