@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST
-from txtlocal.forms import InboxSMSForm
+
+from .forms import InboxSMSForm
+
 
 @require_POST
 def sms_response(request):
@@ -9,10 +11,4 @@ def sms_response(request):
         form.save()
         return HttpResponse('OK')
     else:
-        print "There were some errors parsing data from Txtlocal:"
-        print form.errors
         return HttpResponse('Error')
-
-
-
-        

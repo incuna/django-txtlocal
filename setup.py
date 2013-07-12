@@ -1,14 +1,15 @@
 from setuptools import setup, find_packages
 
+
 setup(
-    name = "incuna-txtlocal",
-	packages = find_packages(),
+    name='django-txtlocal',
+    packages=find_packages(),
     include_package_data=True,
-    install_requires=[
-    ],
-    version = "1.0",
-    description = "Incuna app for sending SMS messages via http://www.txtlocal.co.uk",
-    author = "Incuna Ltd",
-    author_email = "admin@incuna.com",
-    url = "http://incuna.com/",
+    install_requires=['requests>=1.2.3'],
+    version='1.0',
+    description='App for sending and receiving SMS messages via http://www.textlocal.com',
+    long_description=open('README.rst').read(),
+    author='Incuna Ltd',
+    author_email='admin@incuna.com',
+    url='https://github.com/incuna/django-txtlocal/',
 )
