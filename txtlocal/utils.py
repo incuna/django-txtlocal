@@ -1,8 +1,7 @@
-import requests
-
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
+import requests
 
 
 def send_sms(text, recipient_list, sender=None,
