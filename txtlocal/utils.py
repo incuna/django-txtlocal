@@ -2,6 +2,7 @@ import sys
 
 from django.conf import settings
 from django.contrib.sites.models import Site
+from django.core.exceptions import ImproperlyConfigured
 from django.template.loader import render_to_string
 import requests
 
@@ -27,6 +28,18 @@ def send_sms(text, recipient_list, sender=None,
 
     Any unrecognised kwargs will be passed to txtlocal in the POST data.
     """
+    sender = getattr(settings, 'TXTLOCAL_FROM', sender)
+    if not sender:
+        raise ImproperlyConfigured('The TXTLOCAL_FROM setting must not be empty.')
+
+    password = getattr(settings, 'TXTLOCAL_PASSWORD', password)
+    if not password:
+        raise ImproperlyConfigured('The TXTLOCAL_PASSWORD setting must not be empty.')
+
+    username = getattr(settings, 'TXTLOCAL_USERNAME', username)
+    if not username:
+        raise ImproperlyConfigured('The TXTLOCAL_USERNAME setting must not be empty.')
+
     if getattr(settings, 'TXTLOCAL_DEBUG', False):
         # render to console
         sys.stdout.write(recipient_list)
@@ -40,7 +53,7 @@ def send_sms(text, recipient_list, sender=None,
         'message': text,
         'uname': username or settings.TXTLOCAL_USERNAME,
         'pword': password or settings.TXTLOCAL_PASSWORD,
-        'from': sender or settings.TXTLOCAL_FROM,
+        'from': sender,
         'json': 1,  # This makes textlocal send us back info about the request.
     }
 
