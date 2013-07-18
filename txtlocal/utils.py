@@ -42,9 +42,12 @@ def send_sms(text, recipient_list, sender=None,
 
     if getattr(settings, 'TXTLOCAL_DEBUG', False):
         # render to console
-        sys.stdout.write(recipient_list)
-        sys.stdout.write(sender)
+        sys.stdout.write('To:   {0}\n'.format(', '.join(recipient_list)))
+        sys.stdout.write('From: {0}\n'.format(sender))
         sys.stdout.write(text)
+        sys.stdout.write('\n')
+        sys.stdout.write('-' * 79)
+        sys.stdout.write('\n')
         sys.stdout.flush()
         return
 
