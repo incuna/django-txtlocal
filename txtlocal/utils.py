@@ -1,3 +1,5 @@
+import sys
+
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
@@ -25,6 +27,14 @@ def send_sms(text, recipient_list, sender=None,
 
     Any unrecognised kwargs will be passed to txtlocal in the POST data.
     """
+    if getattr(settings, 'TXTLOCAL_DEBUG', False):
+        # render to console
+        sys.stdout.write(recipient_list)
+        sys.stdout.write(sender)
+        sys.stdout.write(text)
+        sys.stdout.flush()
+        return
+
     payload = {
         'selectednums': ','.join(recipient_list),
         'message': text,
