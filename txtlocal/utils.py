@@ -29,7 +29,7 @@ def send_sms(text, recipient_list, sender=None,
         'selectednums': ','.join(recipient_list),
         'message': text,
         'uname': username or settings.TXTLOCAL_USERNAME,
-        'pword': password or password.TXTLOCAL_PASSWORD,
+        'pword': password or settings.TXTLOCAL_PASSWORD,
         'from': sender or settings.TXTLOCAL_FROM,
         'json': 1,  # This makes textlocal send us back info about the request.
     }
