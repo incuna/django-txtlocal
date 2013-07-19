@@ -29,17 +29,21 @@ def send_sms(text, recipient_list, sender=None,
 
     Any unrecognised kwargs will be passed to txtlocal in the POST data.
     """
-    sender = getattr(settings, 'TXTLOCAL_FROM', sender)
+    def get_setting(setting):
+        try:
+            return getattr(settings, setting)
+        except AttributeError:
+            msg = 'The {0} settings must not be empty.'
+            raise ImproperlyConfigured(msg.format(settings))
+
     if not sender:
-        raise ImproperlyConfigured('The TXTLOCAL_FROM setting must not be empty.')
+        sender = get_setting('TXTLOCAL_FROM')
 
-    password = getattr(settings, 'TXTLOCAL_PASSWORD', password)
     if not password:
-        raise ImproperlyConfigured('The TXTLOCAL_PASSWORD setting must not be empty.')
+        password = get_setting('TXTLOCAL_PASSWORD')
 
-    username = getattr(settings, 'TXTLOCAL_USERNAME', username)
     if not username:
-        raise ImproperlyConfigured('The TXTLOCAL_USERNAME setting must not be empty.')
+        username = get_setting('TXTLOCAL_USERNAME')
 
     if getattr(settings, 'TXTLOCAL_DEBUG', False):
         # render to console
