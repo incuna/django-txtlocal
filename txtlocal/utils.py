@@ -83,7 +83,7 @@ def send_sms(text, recipient_list, sender=None,
         required <= 0 or
         available - required != remaining
     ):
-        err = 'Message may not have been sent. Response was: "{0}"'.format(r.json())
+        err = 'Message may not have been sent. Response was: "{0}"'.format(r.json()['Error'])
         raise TxtLocalException(err)
 
 
