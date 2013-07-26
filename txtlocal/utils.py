@@ -8,6 +8,9 @@ from django.template.loader import render_to_string
 import requests
 
 
+class TxtLocalException(Exception): pass
+
+
 def send_sms(text, recipient_list, sender=None,
              username=None, password=None, **kwargs):
     """
@@ -67,10 +70,12 @@ def send_sms(text, recipient_list, sender=None,
     }
 
     url = getattr(settings, 'TXTLOCAL_ENDPOINT', 'https://www.txtlocal.com/sendsmspost.php')
-    response = requests.post(url, data=payload).json()
-    available = response.get('CreditsAvailable')
-    required = response.get('CreditsRequired')
-    remaining = response.get('CreditsRemaining')
+    r = requests.post(url, data=payload)
+    r.raise_for_status()
+
+    available = r.json().get('CreditsAvailable')
+    required = r.json().get('CreditsRequired')
+    remaining = r.json().get('CreditsRemaining')
     if (
         available is None or
         required is None or
@@ -78,8 +83,8 @@ def send_sms(text, recipient_list, sender=None,
         required <= 0 or
         available - required != remaining
     ):
-        err = 'Message may not have been sent. Response was: "%s"' % response
-        raise RuntimeError(err)
+        err = 'Message may not have been sent. Response was: "{0}"'.format(r.json())
+        raise TxtLocalException(err)
 
 
 def render_to_send_sms(template, context=None, **kwargs):
