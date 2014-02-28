@@ -8,7 +8,8 @@ from django.template.loader import render_to_string
 import requests
 
 
-class TxtLocalException(Exception): pass
+class TxtLocalException(Exception):
+    pass
 
 
 def send_sms(text, recipient_list, sender=None,
